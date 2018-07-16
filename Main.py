@@ -5,6 +5,7 @@ import numpy as np
 import ColorEmbedding as ce
 import ColorRecovery as cr
 import Transformations as tr
+import  PIL
 from PIL import Image
 
 # This is the main program of the second attempt
@@ -23,6 +24,7 @@ def main():
 
     k = int(input("Enter a resize order\n"))
 
+    i = 0
     for file in np.sort(glob.glob("./Images/*.png")):
         Image = cv2.imread(file, 3)
 
@@ -36,22 +38,24 @@ def main():
         cv2.imwrite("./ImagesResults/%d.png" % i, Image)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+        i += 1
 
     # Reading restored images with simulations of the real world
-    #Results = [cv2.imread(file, 3) for file in np.sort(
-        #glob.glob("./ImagesResults/*.png"))]
+    Results = [cv2.imread(file, 3) for file in np.sort(
+        glob.glob("./ImagesResults/*.png"))]
 
     #Reading restored images with simulations of the real world
-    i = 0
-    for file in np.sort(glob.glob("./ImagesResults/*.png")):
-        Results[i] = PIL.Image.open(file)
-        convert = PIL.ImageEnhance.Color(Results[i])
-        Results[i] = convert.enhance(0.5) 
-        Results[i].save("./ImagesResults/%d.png" % i,)      
-        i += 1
+    #i = 0
+    #Results = np.array([])
+    #for file in np.sort(glob.glob("./ImagesResults/*.png")):
+        #Results.append = PIL.Image.open(file)
+        #convert = PIL.ImageEnhance.Color(Results[i])
+        #Results[i] = convert.enhance(0.5) 
+        #Results[i].save("./ImagesResults/%d.png" % i,)      
+        #i += 1
     
     # Calculating PSNR's values of the real results
-    i = 1
+    i = 0
     for file in np.sort(glob.glob("./Images/*.png")):
         Original = cv2.imread(file, 3)
         print('Image %d PSNR: %lf' %

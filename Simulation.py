@@ -1,8 +1,8 @@
 import cv2
-import Transformations as tr
+import numpy as np
 
 
-# Função que aplica uma difusão de erros usando o método de Floyd-Steinberg.
+# Add error in the image
 def ErrorDiffusion(img, size=(1, 1)):
         img = np.float32(img)
         #coloca uma borda preta na imagem
@@ -22,7 +22,7 @@ def ErrorDiffusion(img, size=(1, 1)):
                         img_exp[x, y + 1] = img_exp[x, y + 1] + 5 / 16.0 * quant_error
                         img_exp[x + 1, y + 1] = img_exp[x + 1, y + 1] + 1 / 16.0 * quant_error
 
-        #retira borda
+        #remove the border
         img[:, :] = img_exp[1:img.shape[0] + 1, 1:img.shape[1] + 1]
 
         return np.uint8(img)
@@ -35,6 +35,6 @@ def SimulateRealWorld(image, K):
         image, (K * image.shape[0], K * image.shape[1]), interpolation=cv2.INTER_AREA)
 
     # Inserting error in the image
-    image = tr.ErrorDiffusion(image)
+    image = ErrorDiffusion(image)
 
     return image

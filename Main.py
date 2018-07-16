@@ -31,7 +31,7 @@ def main():
         cv2.destroyAllWindows()
 
         # Trying to re-create original images
-        Image = cr.RecoverColor(PureImages[i], 1, k)
+        Image = cr.RecoverColor(Image, 1, k)
         cv2.imwrite("./ImagesResults/%d.png" % i, Image)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
@@ -40,14 +40,13 @@ def main():
     Results = [cv2.imread(file, 3) for file in np.sort(
         glob.glob("./ImagesResults/*.png"))]
     
-    # Reading restored images with simulations of the real world
-    Originals = [cv2.imread(file, 3) for file in np.sort(
-        glob.glob("./Images/*.png"))]    
-
     # Calculating PSNR's values of the real results
-    for i in range(0, 7):
+    i = 1
+    for file in np.sort(glob.glob("./Images/*.png")):
+        Original = cv2.imread(file, 3)
         print('Image %d PSNR: %lf' %
-              (i, tr.getPSNR(Originals[i], Results[i])))
+              (i, tr.getPSNR(Original, Results[i])))
+        i += 1
 
 
 if __name__ == '__main__':

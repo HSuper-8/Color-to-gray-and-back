@@ -18,7 +18,7 @@ def plus_minus(img):
     return plus, minus
 
 
-def IncorporateTexture(img, pure, K):
+def IncorporateTexture(img, K):
     # Transforming image to double type
     img = np.float32(img)
 
@@ -35,10 +35,9 @@ def IncorporateTexture(img, pure, K):
     ReducedCr = cv2.resize(
         Cr, (Sv2.shape[1], Sv2.shape[0]), interpolation=cv2.INTER_AREA)
 
-
     # Adquirindo Cb/Cr-mais e Cb/Cr-menos
-    CbPlus, CbMinus = plus_minus(Cb)
-    CrPlus, CrMinus = plus_minus(Cr)
+    CbPlus, CbMinus = plus_minus(ReducedCb)
+    CrPlus, CrMinus = plus_minus(ReducedCr)
 
     # Resizing Cb- to 1/4 of original size
     ReducedCbMinus = cv2.resize(
@@ -48,11 +47,6 @@ def IncorporateTexture(img, pure, K):
     NewYSecondTry = (pywt.waverec2(
         (Sl, (Sh1, Sv1, ReducedCbMinus), (CrPlus, CbPlus, CrMinus)), 'db1'))
 
-    # Saving results
-    if pure == 0:
-        # Pure result
-        return NewYSecondTry
-    elif pure == 1:
-        # Result with simulation
-        NewYSecondTry = sm.SimulateRealWorld(NewYSecondTry, K)
-        return NewYSecondTry
+    # Result with simulation
+    NewYSecondTry = sm.SimulateRealWorld(NewYSecondTry, K)
+    return NewYSecondTry

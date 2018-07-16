@@ -4,13 +4,12 @@ import numpy as np
 import Transformations as tr
 
 
-def RecoverColor(Image, pure, K):
+def RecoverColor(Image, K):
 
-    if pure == 1:
-        # Removing haftone and going back to the original resolution (simulation case)
-        Filtered = cv2.blur(Image, (K, K))
-        Image = cv2.resize(Filtered, (int((1 / K) * Filtered.shape[0]), int(
-            (1 / K) * Filtered.shape[1])), interpolation=cv2.INTER_AREA)
+    # Removing haftone and going back to the original resolution (simulation case)
+    Filtered = cv2.blur(Image, (K, K))
+    Image = cv2.resize(Filtered, (int((1 / K) * Filtered.shape[0]), int(
+        (1 / K) * Filtered.shape[1])), interpolation=cv2.INTER_AREA)
 
     # Wavelet Transformation in 2 levels
     (Sl, (Sh1, Sv1, Sd1), (Sh2, Sv2, Sd2)) = pywt.wavedec2(Image, 'db1', level=2)

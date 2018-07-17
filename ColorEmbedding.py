@@ -6,7 +6,7 @@ import Transformations as tr
 
 
 # Função que calcula Cb/Cr-menos e mais
-def plus_minus(img):
+def DividePlusMinus(img):
     height, width = img.shape
 
     plus = np.zeros((height, width), np.float32)
@@ -36,8 +36,8 @@ def IncorporateTexture(img, K):
         Cr, (Sv2.shape[1], Sv2.shape[0]), interpolation=cv2.INTER_AREA)
 
     # Adquirindo Cb/Cr-mais e Cb/Cr-menos
-    CbPlus, CbMinus = plus_minus(ReducedCb)
-    CrPlus, CrMinus = plus_minus(ReducedCr)
+    CbPlus, CbMinus = DividePlusMinus(ReducedCb)
+    CrPlus, CrMinus = DividePlusMinus(ReducedCr)
 
     # Resizing Cb- to 1/4 of original size
     ReducedCbMinus = cv2.resize(
@@ -47,6 +47,4 @@ def IncorporateTexture(img, K):
     NewYSecondTry = (pywt.waverec2(
         (Sl, (Sh1, Sv1, ReducedCbMinus), (CrPlus, CbPlus, CrMinus)), 'db1'))
 
-    # Result with simulation
-    NewYSecondTry = sm.SimulateRealWorld(NewYSecondTry, K)
     return NewYSecondTry

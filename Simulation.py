@@ -37,4 +37,10 @@ def SimulateRealWorld(image, K):
     # Inserting error in the image
     image = ErrorDiffusion(image)
 
+
+    # Removing haftone and going back to the original resolution (simulation case)
+    Filtered = cv2.blur(image, (K, K))
+    image = cv2.resize(Filtered, (int((1 / K) * Filtered.shape[1]), int(
+        (1 / K) * Filtered.shape[0])), interpolation=cv2.INTER_AREA)
+
     return image

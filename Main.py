@@ -4,6 +4,7 @@ import pathlib
 import numpy as np
 import ColorEmbedding as ce
 import ColorRecovery as cr
+import Simulation as sm
 import Transformations as tr
 import  PIL
 from PIL import Image
@@ -12,7 +13,7 @@ from PIL import Image
 
 
 def main():
-
+    simulation = 1
     # Creating directories to save images
 
     # Textured Images with simulations of the real world
@@ -29,15 +30,14 @@ def main():
         Image = cv2.imread(file, 3)
 
         Image = ce.IncorporateTexture(Image, k)
+
+        if(simulation == 1):
+            Image = sm.SimulateRealWorld(Image, k)
         cv2.imwrite("./ImagesTextures/%d.png" % i, Image)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
 
         # Trying to re-create original images
         Image = cr.RecoverColor(Image, k)
         cv2.imwrite("./ImagesResults/%d.png" % i, Image)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
         i += 1
 
     # Reading restored images with simulations of the real world

@@ -109,3 +109,5 @@ venv.bak/
 
 # Ignorando imagens de meio termo
 Images/*.png
+ImagesResults/*.png
+ImagesTextures/*.png

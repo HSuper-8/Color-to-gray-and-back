@@ -2,10 +2,11 @@ import cv2
 import numpy as np
 
 
-# Add error in the image
+# Function that adds error difusion in the image
 def ErrorDiffusion(img):
         img = np.float32(img)
-        #coloca uma borda preta na imagem
+
+        # Insert a border in the image
         img_exp = np.zeros((img.shape[0] + 2, img.shape[1] + 2))
         img_exp[1:img.shape[0] + 1, 1:img.shape[1] + 1] = img[:, :]
 
@@ -22,12 +23,12 @@ def ErrorDiffusion(img):
                         img_exp[x, y + 1] = img_exp[x, y + 1] + 5 / 16.0 * quant_error
                         img_exp[x + 1, y + 1] = img_exp[x + 1, y + 1] + 1 / 16.0 * quant_error
 
-        #remove the border
+        # Removes the border previously inserted
         img[:, :] = img_exp[1:img.shape[0] + 1, 1:img.shape[1] + 1]
 
         return np.uint8(img)
 
-
+# Function that simulates the process of a printer and a scanner
 def SimulateRealWorld(image, K):
 
     # Scaling and Haftoning image simulating print and scaning in real life

@@ -9,8 +9,7 @@ import Transformations as tr
 import  PIL
 from PIL import Image
 
-# This is the main program of the second attempt
-
+# This is the main program of the Color to Gray and Back algorithm
 
 def main():
     simulation = 1

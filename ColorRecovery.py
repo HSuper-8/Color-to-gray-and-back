@@ -2,8 +2,26 @@ import cv2
 import pywt
 import numpy as np
 import Transformations as tr
+from PIL import Image, ImageEnhance
 
-#Function that recovers the color of a gray imagem with embedded texture
+
+def Saturation(i):
+    for k in range(0, i):
+        Result = cv2.imread("./ImagesResults/%d.png" % k)
+        Result = cv2.cvtColor(Result, cv2.COLOR_BGR2HSV)
+        H, S, V = cv2.split(Result)
+        for x in range(0, Result.shape[0]):
+            for y in range(0, Result.shape[1]):
+                S[x,y] = 1.44 * S[x,y]
+                if S[x, y] > 255:
+                    S[x, y] = 255
+        Result = cv2.merge([H, S, V])
+        Result = cv2.cvtColor(Result, cv2.COLOR_HSV2BGR)
+        cv2.imwrite("./ImagesResults/%d.png" % k, Result)
+
+# Function that recovers the color of a gray imagem with embedded texture
+
+
 def RecoverColor(Image, K):
 
     # Wavelet Transformation in 2 levels

@@ -6,13 +6,11 @@ import ColorEmbedding as ce
 import ColorRecovery as cr
 import Simulation as sm
 import Transformations as tr
-import  PIL
-from PIL import Image
+from PIL import Image, ImageEnhance
 
 # This is the main program of the Color to Gray and Back algorithm
 
 def main():
-    simulation = 1
     # Creating directories to save images
 
     # Textured Images with simulations of the real world
@@ -30,8 +28,7 @@ def main():
 
         Image = ce.IncorporateTexture(Image, k)
 
-        if(simulation == 1):
-            Image = sm.SimulateRealWorld(Image, k)
+        Image = sm.SimulateRealWorld(Image, k)
         cv2.imwrite("./ImagesTextures/%d.png" % i, Image)
 
         # Trying to re-create original images
@@ -39,27 +36,21 @@ def main():
         cv2.imwrite("./ImagesResults/%d.png" % i, Image)
         i += 1
 
+    # Reading original images
+    Originals = [cv2.imread(file, 3) for file in np.sort(
+        glob.glob("./Images/*.png"))]
+
+
+    cr.Saturation(i)
+
     # Reading restored images with simulations of the real world
     Results = [cv2.imread(file, 3) for file in np.sort(
-        glob.glob("./ImagesResults/*.png"))]
-
-    #Reading restored images with simulations of the real world
-    #i = 0
-    #Results = np.array([])
-    #for file in np.sort(glob.glob("./ImagesResults/*.png")):
-        #Results.append = PIL.Image.open(file)
-        #convert = PIL.ImageEnhance.Color(Results[i])
-        #Results[i] = convert.enhance(0.5) 
-        #Results[i].save("./ImagesResults/%d.png" % i,)      
-        #i += 1
+        glob.glob("./ImagesResults/*.png"))]    
     
-    # Calculating PSNR's values of the real results
-    i = 0
-    for file in np.sort(glob.glob("./Images/*.png")):
-        Original = cv2.imread(file, 3)
+    for k in range (0, i):
+        # Calculating PSNR's values of the real results
         print('Image %d PSNR: %lf' %
-              (i, tr.getPSNR(Original, Results[i])))
-        i += 1
+              (k, tr.getPSNR(Originals[k], Results[k])))
 
 
 if __name__ == '__main__':

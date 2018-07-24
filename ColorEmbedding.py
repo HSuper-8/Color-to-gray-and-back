@@ -11,19 +11,17 @@ def DividePlusMinus(img):
     plus = np.zeros((img.shape[0], img.shape[1]))
     minus = np.zeros((img.shape[0], img.shape[1]))
 
-     # Separate the image in positive(plus) and negative(minus)
-    for i in range(0, img.shape[0]):
-        for j in range(0, img.shape[1]):
-            if img[i, j] < 0:
-                plus[i, j] = 0
-                minus[i, j] = img[i, j]
-            elif img[i, j] > 0:
-                minus[i, j] = 0
-                plus[i, j] = img[i, j]
+    # Separate the image in positive(plus) and negative(minus)
+
+    minus = (img - np.abs(img)) / 2
+    plus = (img + np.abs(img)) / 2
+
     return plus, minus
 
-# Function that incorporate the texture in a RGB imagem 
-def IncorporateTexture(img, K):
+# Function that incorporate the texture in a RGB imagem
+
+
+def IncorporateTexture(img):
     # Transforming image to double type
     img = np.float32(img)
 
@@ -52,4 +50,4 @@ def IncorporateTexture(img, K):
     NewYSecondTry = (pywt.waverec2(
         (Sl, (Sh1, Sv1, ReducedCbMinus), (CrPlus, CbPlus, CrMinus)), 'db1'))
     
-    return NewYSecondTry
+    return np.uint8(NewYSecondTry)

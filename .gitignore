@@ -106,6 +106,7 @@ venv.bak/
 *~
 *#
 *.pdf
+*.yml
 
 # Ignorando imagens de meio termo
 Images/*.png

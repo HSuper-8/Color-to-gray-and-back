@@ -20,21 +20,21 @@ def main():
     # Final Images after the process with simulations of the real world
     pathlib.Path('./ImagesResults').mkdir(parents=True, exist_ok=True)
 
-    k = int(input("Enter a resize order\n"))
-    simulation = bool(int
-        (input("\nEnter 1 or 0 for the option:\n1 With Simulation\n0 No Simulation\n")))
+    simulation = bool(int(
+        input("\nEnter 1 or 0 for the option:\n1 With Simulation\n0 No Simulation\n")))
 
     i = 0
     for file in np.sort(glob.glob("./Images/*.png")):
         Image = cv2.imread(file, 3)
 
-        Image = ce.IncorporateTexture(Image, k)
+        Image = ce.IncorporateTexture(Image)
         if(simulation):
+            k = int(input("Enter a resize order\n"))
             Image = sm.SimulateRealWorld(Image, k)
         cv2.imwrite("./ImagesTextures/%d.png" % i, Image)
 
         # Trying to re-create original images
-        Image = cr.RecoverColor(Image, k, simulation)
+        Image = cr.RecoverColor(Image, simulation)
         cv2.imwrite("./ImagesResults/%d.png" % i, Image)
         i += 1
 

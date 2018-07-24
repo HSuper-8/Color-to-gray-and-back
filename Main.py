@@ -32,13 +32,17 @@ def main():
             k = int(input("Enter a resize order\n"))
             Image = sm.SimulateRealWorld(Image, k)
         cv2.imwrite("./ImagesTextures/%d.png" % i, Image)
-
-        # Trying to re-create original images
+    
+    i = 0
+    # Trying to re-create original images
+    for file in np.sort(glob.glob("./ImagesTextures/*.png")):
+        Image = cv2.imread(file, 0)
         Image = cr.RecoverColor(Image)
         cv2.imwrite("./ImagesResults/%d.png" % i, Image)
         i += 1
 
-    tr.Saturation()
+    if(simulation):
+        tr.Saturation()
 
     # Reading restored images with simulations of the real world
     Results = [cv2.imread(file, 3) for file in np.sort(

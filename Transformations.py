@@ -14,7 +14,6 @@ def Saturation():
             for y in range(0, Image.shape[1]):
                 S[x,y] = 1.2 * S[x,y]
                 if S[x, y] > 255:
-                    print(S[x, y])
                     S[x, y] = 255
         Image[:, :, 1] = S
         Image = cv2.cvtColor(Image, cv2.COLOR_HSV2BGR)

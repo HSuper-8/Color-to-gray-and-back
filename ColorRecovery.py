@@ -15,7 +15,7 @@ def RecoverColor(Image):
     InterpolateSd1 = (cv2.resize(Sd1, dsize=(
         Sv2.shape[1], Sv2.shape[0]), interpolation=cv2.INTER_AREA))
 
-    # Extracting new Cb and Cr layers from the textured image
+    # Finding new Cb and Cr layers
     Cb = (np.abs(Sv2) - np.abs(InterpolateSd1))
     Cr = (np.abs(Sh2) - np.abs(Sd2))
 

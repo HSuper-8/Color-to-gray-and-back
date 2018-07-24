@@ -34,9 +34,11 @@ def main():
         cv2.imwrite("./ImagesTextures/%d.png" % i, Image)
 
         # Trying to re-create original images
-        Image = cr.RecoverColor(Image, simulation)
+        Image = cr.RecoverColor(Image)
         cv2.imwrite("./ImagesResults/%d.png" % i, Image)
         i += 1
+
+    #tr.Saturation()
 
     # Reading restored images with simulations of the real world
     Results = [cv2.imread(file, 3) for file in np.sort(

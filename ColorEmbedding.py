@@ -4,13 +4,19 @@ import numpy as np
 import Simulation as sm
 import Transformations as tr
 
-
 # Function that separates an array into a positive and a negative array  
 def DividePlusMinus(img):
+
     # Building Cb+, Cb-, Cr+, Cr-
     plus = np.zeros((img.shape[0], img.shape[1]))
     minus = np.zeros((img.shape[0], img.shape[1]))
 
+    # Separate the image in positive(plus) and negative(minus)
+    height, width = img.shape
+
+    plus = np.zeros((height, width), np.float32)
+    minus = np.zeros((height, width), np.float32)
+    
     # Separate the image in positive(plus) and negative(minus)
 
     minus = (img - np.abs(img)) / 2
@@ -18,9 +24,8 @@ def DividePlusMinus(img):
 
     return plus, minus
 
+
 # Function that incorporate the texture in a RGB imagem
-
-
 def IncorporateTexture(img):
     # Transforming image to double type
     img = np.float32(img)
@@ -50,4 +55,4 @@ def IncorporateTexture(img):
     NewYSecondTry = (pywt.waverec2(
         (Sl, (Sh1, Sv1, ReducedCbMinus), (CrPlus, CbPlus, CrMinus)), 'db1'))
     
-    return np.uint8(NewYSecondTry)
+    return NewYSecondTry

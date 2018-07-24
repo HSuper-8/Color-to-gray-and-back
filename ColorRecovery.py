@@ -6,7 +6,7 @@ import Transformations as tr
 # Function that recovers the color of a gray imagem with embedded texture
 
 
-def RecoverColor(Image, simulation):
+def RecoverColor(Image):
 
     # Wavelet Transformation in 2 levels
     (Sl, (Sh1, Sv1, Sd1), (Sh2, Sv2, Sd2)) = pywt.wavedec2(Image, 'db1', level=2)
@@ -41,8 +41,5 @@ def RecoverColor(Image, simulation):
 
     # Returning to RGB domain
     finalimage = tr.YCrCb2BGR((finalimage))
-
-    if simulation:
-        finalimage = tr.Saturation(finalimage)
 
     return finalimage

@@ -38,7 +38,7 @@ def main():
         cv2.imwrite("./ImagesResults/%d.png" % i, Image)
         i += 1
 
-    #tr.Saturation()
+    tr.Saturation()
 
     # Reading restored images with simulations of the real world
     Results = [cv2.imread(file, 3) for file in np.sort(

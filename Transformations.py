@@ -9,11 +9,13 @@ def Saturation():
         Image = cv2.imread(file, 3)
         Image = cv2.cvtColor(Image, cv2.COLOR_BGR2HSV)
         H, S, V = cv2.split(Image)
+       
         for x in range(0, Image.shape[0]):
             for y in range(0, Image.shape[1]):
                 S[x,y] = 1.2 * S[x,y]
-                if S[x, y] > 1:
-                    S[x, y] = 1.0
+                if S[x, y] > 255:
+                    print(S[x, y])
+                    S[x, y] = 255
         Image[:, :, 1] = S
         Image = cv2.cvtColor(Image, cv2.COLOR_HSV2BGR)
         cv2.imwrite("./ImagesResults/%d.png" % i, Image)

@@ -7,25 +7,28 @@ import Transformations as tr
 
 # Function that separates an array into a positive and a negative array  
 def DividePlusMinus(img):
-    height, width = img.shape
+    # Building Cb+, Cb-, Cr+, Cr-
+    plus = np.zeros((img.shape[0], img.shape[1]))
+    minus = np.zeros((img.shape[0], img.shape[1]))
 
-    plus = np.zeros((height, width), np.float32)
-    minus = np.zeros((height, width), np.float32)
-    
-    # Separate the image in positive(plus) and negative(minus)
-    minus = (img - np.abs(img)) / 2
-    plus = (img + np.abs(img)) / 2
-
+     # Separate the image in positive(plus) and negative(minus)
+    for i in range(0, img.shape[0]):
+        for j in range(0, img.shape[1]):
+            if img[i, j] < 0:
+                plus[i, j] = 0
+                minus[i, j] = img[i, j]
+            elif img[i, j] > 0:
+                minus[i, j] = 0
+                plus[i, j] = img[i, j]
     return plus, minus
 
-
-# Function that incorporate the texture in a RGB imagem
+# Function that incorporate the texture in a RGB imagem 
 def IncorporateTexture(img, K):
     # Transforming image to double type
     img = np.float32(img)
 
     # Changing domain to YCrCb
-    img = tr.RGB2YCBCR(img)
+    img = tr.BGR2YCrCb(img)
     Y, Cr, Cb = cv2.split(img)
 
     # Wavelet Transformation in 2 levels
@@ -46,7 +49,7 @@ def IncorporateTexture(img, K):
         CbMinus, (Sd1.shape[1], Sd1.shape[0]), interpolation=cv2.INTER_AREA)
 
     # Inverse Wavelet Transformation
-    NewY = (pywt.waverec2(
+    NewYSecondTry = (pywt.waverec2(
         (Sl, (Sh1, Sv1, ReducedCbMinus), (CrPlus, CbPlus, CrMinus)), 'db1'))
-
-    return NewY
+    
+    return NewYSecondTry

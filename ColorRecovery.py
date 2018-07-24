@@ -2,27 +2,11 @@ import cv2
 import pywt
 import numpy as np
 import Transformations as tr
-from PIL import Image, ImageEnhance
-
-
-def Saturation(i):
-    for k in range(0, i):
-        Result = cv2.imread("./ImagesResults/%d.png" % k)
-        Result = cv2.cvtColor(Result, cv2.COLOR_BGR2HSV)
-        H, S, V = cv2.split(Result)
-        for x in range(0, Result.shape[0]):
-            for y in range(0, Result.shape[1]):
-                S[x,y] = 1.44 * S[x,y]
-                if S[x, y] > 255:
-                    S[x, y] = 255
-        Result = cv2.merge([H, S, V])
-        Result = cv2.cvtColor(Result, cv2.COLOR_HSV2BGR)
-        cv2.imwrite("./ImagesResults/%d.png" % k, Result)
 
 # Function that recovers the color of a gray imagem with embedded texture
 
 
-def RecoverColor(Image, K):
+def RecoverColor(Image, K, simulation):
 
     # Wavelet Transformation in 2 levels
     (Sl, (Sh1, Sv1, Sd1), (Sh2, Sv2, Sd2)) = pywt.wavedec2(Image, 'db1', level=2)
@@ -42,7 +26,7 @@ def RecoverColor(Image, K):
     ZerosSd2 = np.zeros((Sd2.shape[0], Sd2.shape[1]))
 
     # Inverse wavelet transformation with zeros to get Y layer back
-    FinalYSecondTry = (pywt.waverec2(
+    FinalY = (pywt.waverec2(
         (Sl, (Sh1, Sv1, ZerosSd1), (ZerosSh2, ZerosSv2, ZerosSd2)), 'db1'))
 
     # Resizing layers
@@ -53,9 +37,12 @@ def RecoverColor(Image, K):
 
     # Building final image
     finalimage = cv2.merge(
-        ((FinalYSecondTry), (InterpolateCr), (InterpolateCb)))
+        ((FinalY), (InterpolateCr), (InterpolateCb)))
 
     # Returning to RGB domain
-    finalimage = tr.YCbCr2BGR((finalimage))
+    finalimage = tr.YCrCb2BGR((finalimage))
+
+    if simulation:
+        finalimage = tr.Saturation(finalimage)
 
     return finalimage

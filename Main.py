@@ -8,8 +8,6 @@ import Simulation as sm
 import Transformations as tr
 
 # This is the main program of the Color to Gray and Back algorithm
-
-
 def main():
     # Creating directories to save images
 
@@ -21,42 +19,34 @@ def main():
     pathlib.Path('./ImagesResults').mkdir(parents=True, exist_ok=True)
 
     simulation = bool(int(
-        input("\nEnter 1 or 0 for the option:\n1 With Simulation\n0 No Simulation\n")))
+        input("\nEnter (1) or (0) for the option:\n(1) With Simulation\n(0) No Simulation\n")))
+    if(simulation):
+        k = int(input("Enter a resize order\n"))    
 
-    i = 0
-    for file in np.sort(glob.glob("./Images/*.png")):
-        Image = cv2.imread(file, 3)
+    for file in np.sort(glob.glob("Images/*.png")):
+        print("Imagem %s..." % file[7:],)
+        Image = cv2.imread('Images/%s' % file[7:])
 
         Image = ce.IncorporateTexture(Image)
         if(simulation):
-            k = int(input("Enter a resize order\n"))
+            print("Simulando distorção por impressão...")
             Image = sm.SimulateRealWorld(Image, k)
-        cv2.imwrite("./ImagesTextures/%d.png" % i, Image)
+        cv2.imwrite("ImagesTextures/%s" % file[7:], Image)
     
-    i = 0
-    # Trying to re-create original images
-    for file in np.sort(glob.glob("./ImagesTextures/*.png")):
-        Image = cv2.imread(file, 0)
+        # Trying to re-create original images
+        Image = cv2.imread('ImagesTextures/%s' % file[7:], 0)
         Image = cr.RecoverColor(Image)
-        cv2.imwrite("./ImagesResults/%d.png" % i, Image)
-        i += 1
+        cv2.imwrite("ImagesResults/%s" % file[7:], Image)
 
-    if(simulation):
-        tr.Saturation()
+        if(simulation):
+            tr.Saturation()
 
-    # Reading restored images with simulations of the real world
-    Results = [cv2.imread(file, 3) for file in np.sort(
-        glob.glob("./ImagesResults/*.png"))]
+        # Reading restored images with simulations of the real world
+        Result = cv2.imread('ImagesResults/%s' % file[7:])
 
-    # Calculating PSNR's values of the real results
-    i = 0
-    print('\n')
-    for file in np.sort(glob.glob("./Images/*.png")):
-        Original = cv2.imread(file, 3)
-        print('Image %d PSNR: %lf' %
-              (i, tr.getPSNR(Original, Results[i])))
-        i += 1
-
-
+        # Calculating PSNR's values of the real results
+        Original = cv2.imread("Images/%s" % file[7:])
+        print('PSNR: %lf' % tr.getPSNR(Original, Result))
+        
 if __name__ == '__main__':
     main()

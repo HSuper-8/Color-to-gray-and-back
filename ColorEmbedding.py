@@ -7,10 +7,6 @@ import Transformations as tr
 # Function that separates an array into a positive and a negative array  
 def DividePlusMinus(img):
 
-    # Building Cb+, Cb-, Cr+, Cr-
-    plus = np.zeros((img.shape[0], img.shape[1]))
-    minus = np.zeros((img.shape[0], img.shape[1]))
-
     # Separate the image in positive(plus) and negative(minus)
     height, width = img.shape
 

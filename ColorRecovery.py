@@ -36,10 +36,10 @@ def RecoverColor(Image):
         Cr, (2 * Cr.shape[1], 2 * Cr.shape[0]), interpolation=cv2.INTER_AREA))
 
     # Building final image
-    finalimage = cv2.merge(
+    FinalImage = cv2.merge(
         ((FinalY), (InterpolateCr), (InterpolateCb)))
 
     # Returning to RGB domain
-    finalimage = tr.YCrCb2BGR((finalimage))
+    FinalImage = tr.YCrCb2BGR((FinalImage))
 
-    return finalimage
+    return FinalImage

@@ -3,9 +3,8 @@ import pywt
 import numpy as np
 import Transformations as tr
 
+
 # Function that recovers the color of a gray imagem with embedded texture
-
-
 def RecoverColor(Image):
 
     # Wavelet Transformation in 2 levels
@@ -13,7 +12,7 @@ def RecoverColor(Image):
 
     # Interpolating Sd1
     InterpolateSd1 = (cv2.resize(Sd1, dsize=(
-        Sv2.shape[1], Sv2.shape[0]), interpolation=cv2.INTER_AREA))
+        Sv2.shape[1], Sv2.shape[0]), interpolation=cv2.INTER_LANCZOS4))
 
     # Finding new Cb and Cr layers
     Cb = (np.abs(Sv2) - np.abs(InterpolateSd1))
@@ -31,9 +30,9 @@ def RecoverColor(Image):
 
     # Resizing layers
     InterpolateCb = (cv2.resize(
-        Cb, (2 * Cb.shape[1], 2 * Cb.shape[0]), interpolation=cv2.INTER_AREA))
+        Cb, (2 * Cb.shape[1], 2 * Cb.shape[0]), interpolation=cv2.INTER_LANCZOS4))
     InterpolateCr = (cv2.resize(
-        Cr, (2 * Cr.shape[1], 2 * Cr.shape[0]), interpolation=cv2.INTER_AREA))
+        Cr, (2 * Cr.shape[1], 2 * Cr.shape[0]), interpolation=cv2.INTER_LANCZOS4))
 
     # Building final image
     FinalImage = cv2.merge(

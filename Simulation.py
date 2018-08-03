@@ -26,22 +26,22 @@ def ErrorDiffusion(img):
         # Removes the border previously inserted
         img[:, :] = img_exp[1:img.shape[0] + 1, 1:img.shape[1] + 1]
 
-        return np.uint8(img)
+        return img
+
 
 # Function that simulates the process of a printer and a scanner
 def SimulateRealWorld(image, K):
 
     # Scaling and Haftoning image simulating print and scaning in real life
     image = cv2.resize(
-        image, (K * image.shape[1], K * image.shape[0]), interpolation=cv2.INTER_AREA)
+        image, (K * image.shape[1], K * image.shape[0]), interpolation=cv2.INTER_LANCZOS4)
 
     # Inserting error in the image
     image = ErrorDiffusion(image)
 
-
     # Removing haftone and going back to the original resolution (simulation case)
     Filtered = cv2.blur(image, (K, K))
     image = cv2.resize(Filtered, (int((1 / K) * Filtered.shape[1]), int(
-        (1 / K) * Filtered.shape[0])), interpolation=cv2.INTER_AREA)
+        (1 / K) * Filtered.shape[0])), interpolation=cv2.INTER_LANCZOS4)
 
     return image

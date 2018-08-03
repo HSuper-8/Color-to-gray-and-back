@@ -4,7 +4,8 @@ import numpy as np
 import Simulation as sm
 import Transformations as tr
 
-# Function that separates an array into a positive and a negative array  
+
+# Function that separates an array into a positive and a negative array
 def DividePlusMinus(img):
 
     # Separate the image in positive(plus) and negative(minus)
@@ -12,9 +13,8 @@ def DividePlusMinus(img):
 
     plus = np.zeros((height, width), np.float32)
     minus = np.zeros((height, width), np.float32)
-    
-    # Separate the image in positive(plus) and negative(minus)
 
+    # Separate the image in positive(plus) and negative(minus)
     minus = (img - np.abs(img)) / 2
     plus = (img + np.abs(img)) / 2
 
@@ -35,9 +35,9 @@ def IncorporateTexture(img):
 
     # Resizing layers
     ReducedCb = cv2.resize(
-        Cb, (Sd2.shape[1], Sd2.shape[0]), interpolation=cv2.INTER_AREA)
+        Cb, (Sd2.shape[1], Sd2.shape[0]), interpolation=cv2.INTER_LANCZOS4)
     ReducedCr = cv2.resize(
-        Cr, (Sv2.shape[1], Sv2.shape[0]), interpolation=cv2.INTER_AREA)
+        Cr, (Sv2.shape[1], Sv2.shape[0]), interpolation=cv2.INTER_LANCZOS4)
 
     # Acquiring Cb/Cr-plus e Cb/Cr-minus
     CbPlus, CbMinus = DividePlusMinus(ReducedCb)
@@ -45,10 +45,10 @@ def IncorporateTexture(img):
 
     # Resizing Cb- to 1/4 of original size
     ReducedCbMinus = cv2.resize(
-        CbMinus, (Sd1.shape[1], Sd1.shape[0]), interpolation=cv2.INTER_AREA)
+        CbMinus, (Sd1.shape[1], Sd1.shape[0]), interpolation=cv2.INTER_LANCZOS4)
 
     # Inverse Wavelet Transformation
     NewYSecondTry = (pywt.waverec2(
         (Sl, (Sh1, Sv1, ReducedCbMinus), (CrPlus, CbPlus, CrMinus)), 'db1'))
-    
+
     return NewYSecondTry

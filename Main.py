@@ -25,13 +25,13 @@ def main():
         k = int(input("Enter a resize order\n"))
 
     for file in np.sort(glob.glob("Images/*.png")):
-        print("Imagem %s..." % file[7:],)
+        print("Image %s..." % file[7:],)
         Image = cv2.imread('Images/%s' % file[7:])
 
         Image = ce.IncorporateTexture(Image)
         if(simulation):
-            print("Simulando distorção por impressão...")
-            Image = sm.SimulateRealWorld(Image, k)
+            print("Simulating Print e Scan...")
+            Image = sm.SimulatePrintScan(Image, k)
         cv2.imwrite("ImagesTextures/%s" % file[7:], Image)
 
         # Trying to re-create original images

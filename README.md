@@ -1,7 +1,7 @@
-# Color2Gray-andBack
+# Color-to-gray-and-back
 
 ## Description
-This Program was created to replicate the results achieved by Ricardo L. de Queiroz and Karen M. Braun in their paper "Color to Gray and Back:Color Embedding Into Textured Gray Images". The objective of this software was to insert the color information of a colored image inside its gray-scale format by using wavelet transform in order that we can recover the color afterwards. 
+This Program was created to replicate the results achieved by Ricardo L. de Queiroz and Karen M. Braun in their paper "[Color to Gray and Back:Color Embedding Into Textured Gray Images](http://queiroz.divp.org/papers/color-to-bw.pdf)". The objective of this software was to insert the color information of a colored image inside its gray-scale format by using wavelet transform in order that we can recover the color afterwards. 
 
 
 ## Prerequisites

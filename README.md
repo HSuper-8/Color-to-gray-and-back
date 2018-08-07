@@ -15,6 +15,18 @@ This program was written in Python 3.5 so the usage of it in another version is 
 
 ## Running the Program
 
+First, acess the directory of the source code vai terminal and then execute the following command:
+- python Main.py
+
+In the program, it will be asked if the user wants to simulate the digitalization. If the use wants to execute with the simulation, then it will be necessary to inform the order of the resize that will be applied to the image. This resize is responsible to preserve part of the information that would have been lost in the process of digitalization.
+
+In order that the software works , the images must be inserted in the 'Images' folder. The process will be aplied to all the images in this folder. Besides that, it is also reccomended that the images are in the PNG format, otherwise it is not guaranteed that the program will run properly.
+
+### Output
+
+The textured images will be outputed in the folder 'ImagesTextures' and the color recovered ones in the 'ImageResults' folder. The output images will have the same name as its original and will be in the PNG format.
+
+At the end of the execution, it will be displayed in the terminal the recovered image and its equivalent PSNR value.	
 
 ## Authors
 - Danilo Inácio dos Santos Silva

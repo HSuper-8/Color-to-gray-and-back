@@ -17,6 +17,6 @@ This program was written in Python 3.5 so the usage of it in another version is 
 
 
 ## Authors
-- Danilo Inácio n sei de q
+- Danilo Inácio dos Santos Silva
 - Hevelyn Sthefany Lima de Carvalho 
 - Felipe Lima Vaz

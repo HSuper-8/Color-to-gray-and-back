@@ -6,6 +6,8 @@ import ColorEmbedding as ce
 import ColorRecovery as cr
 import Simulation as sm
 import Transformations as tr
+import sys
+import matplotlib.pyplot as plt
 
 
 # This is the main program of the Color to Gray and Back algorithm
@@ -28,24 +30,41 @@ def main():
         print("Image %s..." % file[7:],)
         Image = cv2.imread('Images/%s' % file[7:])
 
-        Image = ce.IncorporateTexture(Image)
+        ImageText = ce.IncorporateTexture(Image)
         if(simulation):
             print("Simulating Print e Scan...")
-            Image = sm.SimulatePrintScan(Image, k)
-        cv2.imwrite("ImagesTextures/%s" % file[7:], Image)
+            ImageText = sm.SimulatePrintScan(ImageText, k)
+        cv2.imwrite("ImagesTextures/%s" % file[7:], ImageText)
 
         # Trying to re-create original images
-        Image = cv2.imread('ImagesTextures/%s' % file[7:], 0)
-        Image = cr.RecoverColor(Image)
+        ImageText = cv2.imread('ImagesTextures/%s' % file[7:], 0)
+        Result = cr.RecoverColor(ImageText)
         if(simulation):
-            Image = tr.Saturation(Image)
-        cv2.imwrite("ImagesResults/%s" % file[7:], Image)
+            Result = tr.Saturation(Result)
+        cv2.imwrite("ImagesResults/%s" % file[7:], Result)
 
         # Reading restored images with simulations of the real world
         Result = cv2.imread('ImagesResults/%s' % file[7:])
+        Original = cv2.imread("Images/%s" % file[7:])
+
+        # Prints the original, textured, and resulting image
+        if '-p' in sys.argv:
+            plt.subplot(131)
+            plt.imshow(cv2.cvtColor(Original, cv2.COLOR_BGR2RGB))
+            plt.title("Imagem original")
+            plt.axis('off')
+            plt.subplot(132)
+            plt.imshow(ImageText, cmap='gray')
+            plt.title("Imagem Texturizada")
+            plt.axis('off')
+            plt.subplot(133)
+            plt.imshow(cv2.cvtColor(Result, cv2.COLOR_BGR2RGB))
+            plt.title("Imagem Resultante")
+            plt.axis('off')
+            plt.show()
+
 
         # Calculating PSNR's values of the real results
-        Original = cv2.imread("Images/%s" % file[7:])
         print('PSNR: %lf' % tr.getPSNR(Original, Result))
 
 

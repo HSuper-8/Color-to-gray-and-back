@@ -11,6 +11,8 @@ This program was written in Python 3.5 so the usage of it in another version is 
 - pywt
 - glob
 - pathlib
+- sys
+- matplotlib
 
 
 ## Running the Program

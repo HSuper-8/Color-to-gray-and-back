@@ -5,9 +5,18 @@ import numpy as np
 import ColorEmbedding as ce
 import ColorRecovery as cr
 import Simulation as sm
-import Transformations as tr
+import ColorSpaceTools as cst
 import sys
 import matplotlib.pyplot as plt
+
+######################################################################################
+#Nesse módulo é realizada a codificação e decodificação das cores para um conjunto   #
+#de imagens, oferecendo as opções de simular impressão/digitalização e escolher      #
+#diferentes valores de resize. Além disso, é calculado o valor do PSNR entre a imagem#
+#original e a decodificada, permitindo testar a capacidade de recuperação de   cores #
+#do algoritmo.                                                                       #
+#                                                                                    #
+######################################################################################
 
 
 # This is the main program of the Color to Gray and Back algorithm
@@ -32,7 +41,7 @@ def main():
 
         ImageText = ce.IncorporateTexture(Image)
         if(simulation):
-            print("Simulating Print e Scan...")
+            print("Simulating Print and Scan...")
             ImageText = sm.SimulatePrintScan(ImageText, k)
         cv2.imwrite("ImagesTextures/%s" % file[7:], ImageText)
 
@@ -40,7 +49,7 @@ def main():
         ImageText = cv2.imread('ImagesTextures/%s' % file[7:], 0)
         Result = cr.RecoverColor(ImageText)
         if(simulation):
-            Result = tr.Saturation(Result)
+            Result = cst.Saturation(Result)
         cv2.imwrite("ImagesResults/%s" % file[7:], Result)
 
         # Reading restored images with simulations of the real world
@@ -65,7 +74,7 @@ def main():
 
 
         # Calculating PSNR's values of the real results
-        print('PSNR: %lf' % tr.getPSNR(Original, Result))
+        print('PSNR: %lf' % cst.getPSNR(Original, Result))
 
 
 if __name__ == '__main__':

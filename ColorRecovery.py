@@ -1,7 +1,13 @@
 import cv2
 import pywt
 import numpy as np
-import Transformations as tr
+import ColorSpaceTools as cst
+
+###################################################################################
+#Neste módulo é implementado o algoritmo responsável pela decodificação de cor    #
+#de uma imagem texturizada, recuperando os canais de crominancia incorporados na  #
+#imagem.                                                                          #
+###################################################################################
 
 
 # Function that recovers the color of a gray imagem with embedded texture
@@ -39,6 +45,6 @@ def RecoverColor(Image):
         ((FinalY), (InterpolateCr), (InterpolateCb)))
 
     # Returning to RGB domain
-    FinalImage = tr.YCrCb2BGR((FinalImage))
+    FinalImage = cst.YCrCb2BGR((FinalImage))
 
     return FinalImage

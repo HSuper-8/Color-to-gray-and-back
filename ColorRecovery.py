@@ -4,9 +4,9 @@ import numpy as np
 import ColorSpaceTools as cst
 
 ###################################################################################
-#Neste módulo é implementado o algoritmo responsável pela decodificação de cor    #
-#de uma imagem texturizada, recuperando os canais de crominancia incorporados na  #
-#imagem.                                                                          #
+#This module contains the algorithm responsible for the color decodification      #
+#of a textured image, recovering the original chrominance channels embbeded       #
+#inside the image.                                                                #
 ###################################################################################
 
 

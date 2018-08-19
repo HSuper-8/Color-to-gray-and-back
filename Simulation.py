@@ -2,9 +2,9 @@ import cv2
 import numpy as np
 
 #######################################################################
-#Esse módulo contém as funções responsáveis por simular as distorções #
-#que a imagem sofre no processo de impressão seguida de digitalização.#
-#                                                                     #
+#This module contains the implementation of functions responsible to  #
+#simulate the distortions caused by the process of impression followed#
+#by digitalization.                                                   #
 #######################################################################
 
 

@@ -10,11 +10,11 @@ import sys
 import matplotlib.pyplot as plt
 
 ######################################################################################
-#Nesse módulo é realizada a codificação e decodificação das cores para um conjunto   #
-#de imagens, oferecendo as opções de simular impressão/digitalização e escolher      #
-#diferentes valores de resize. Além disso, é calculado o valor do PSNR entre a imagem#
-#original e a decodificada, permitindo testar a capacidade de recuperação de   cores #
-#do algoritmo.                                                                       #
+#This module does the color codification and decodification for a set of             #
+#images, offering the option to simulate an impression and a digitalization and the  #
+#option of different resize values. Besides that, it is calculated the PSNR values   #
+#between the original image and its decodificated version, which is useful to        #
+#test the eficiency of the the color recovery.                                       #
 #                                                                                    #
 ######################################################################################
 

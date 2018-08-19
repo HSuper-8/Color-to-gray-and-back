@@ -2,12 +2,11 @@ import cv2
 import pywt
 import numpy as np
 import ColorSpaceTools as cst
-
+ 
 #############################################################################################
-#Esse modulo contém o algoritmo de codificação das cores incorporando os canais de          # 
-#crominancia no canal de luminancia através da transformada wavelet, gerando                #
-#uma imagem texturizada em níveis de cinza.                                                 #
-#                                                                                           #
+#This module cointains the algorithm of the color codification which inserts the            #
+#chrominance channels within the luminance channel by using the wavelet transform, creating #
+#a texturized grayscale image.                                                              #
 #############################################################################################
 
 

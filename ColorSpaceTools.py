@@ -2,8 +2,7 @@ import cv2
 import numpy as np
 
 ################################################################################
-#Nesse módulo são definidas algumas funções para manipulação do espaço de cores#
-#da imagem.                                                                    #
+#This module define same function for manipulate color space the images        #
 #                                                                              #
 ################################################################################
 

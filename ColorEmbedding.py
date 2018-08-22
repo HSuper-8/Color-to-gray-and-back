@@ -2,7 +2,7 @@ import cv2
 import pywt
 import numpy as np
 import ColorSpaceTools as cst
- 
+
 #############################################################################################
 #This module cointains the algorithm of the color codification which inserts the            #
 #chrominance channels within the luminance channel by using the wavelet transform, creating #

@@ -20,6 +20,8 @@ This program was written in Python 3.5 so the usage of it in another version is 
 First, acess the directory of the source code via terminal and then execute the following command:
 - python Main.py
 
+By adding the '-p' flag in the above command, the original, textured, and rebuilt versions will be displayed in a window after rendering each image. It is required that the user beam the display window so that the process continues with the next image.
+
 In the program, it will be asked if the user wants to simulate the digitalization. If the user wants the simulation, then it will be necessary to inform the order of the resize that will be applied to the image. This resize is responsible to preserve part of the information that would have been lost in the process of digitalization.
 
 In order that the software works, the images must be inserted in the 'Images' folder. The process will be aplied to all the images in this folder. Besides that, it is also reccomended that the images are in the PNG format, otherwise it is not guaranteed that the program will run properly.

@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 
 ################################################################################
-#This module define same function for manipulate color space the images        #
-#                                                                              #
+#This module defines the functions that are useful in the manipulation of      #
+#the color spaces of colored images                                            #
 ################################################################################
 
 
@@ -23,7 +23,7 @@ def DividePlusMinus(img):
     return plus, minus
 
 
-# increases image saturation
+# Increases image saturation
 def Saturation(img):
     img = np.float32(img)
     HSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)

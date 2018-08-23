@@ -8,7 +8,7 @@ import numpy as np
 #######################################################################
 
 
-# Function that adds error difusion in the image
+# Function that adds error difusion into the image
 def ErrorDiffusion(img):
         img = np.float32(img)
 

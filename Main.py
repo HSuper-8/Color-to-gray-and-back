@@ -31,7 +31,7 @@ def main():
     pathlib.Path('./ImagesResults').mkdir(parents=True, exist_ok=True)
 
     simulation = bool(int(
-        input("\nEnter (1) or (0) for the option:\n(1) With Simulation\n(0) No Simulation\n")))
+        input("\nEnter (1) or (0) for the option:\n(1) With Simulation\n(0) Without Simulation\n")))
     if(simulation):
         k = int(input("Enter a resize order\n"))
 

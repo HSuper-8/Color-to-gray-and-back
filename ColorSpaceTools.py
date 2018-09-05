@@ -8,7 +8,7 @@ import numpy as np
 
 
 # Function that separates an array into a positive and a negative array
-def DividePlusMinus(img):
+def dividePlusMinus(img):
 
     # Separate the image in positive(plus) and negative(minus)
     height, width = img.shape
@@ -24,14 +24,14 @@ def DividePlusMinus(img):
 
 
 # Increases image saturation
-def Saturation(img):
+def saturation(img):
     img = np.float32(img)
     HSV = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     H, S, V = cv2.split(HSV)
 
     S *= 1.2
     S -= 255
-    SPlus, SMinus = DividePlusMinus(S)
+    SPlus, SMinus = dividePlusMinus(S)
     S = SMinus + 255
 
     HSV = cv2.merge([H, S, V])

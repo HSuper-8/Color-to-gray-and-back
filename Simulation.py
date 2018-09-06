@@ -10,29 +10,29 @@ import numpy as np
 
 # Function that adds error difusion into the image
 def errorDiffusion(image):
-        image = np.float32(image)
+    image = np.float32(image)
 
-        # Insert a border in the image
-        imageExp = np.zeros((image.shape[0] + 2, image.shape[1] + 2))
-        imageExp[1:image.shape[0] + 1, 1:image.shape[1] + 1] = image[:, :]
+    # Insert a border in the image
+    imageExp = np.zeros((image.shape[0] + 2, image.shape[1] + 2))
+    imageExp[1:image.shape[0] + 1, 1:image.shape[1] + 1] = image[:, :]
 
-        for y in range(1, image.shape[1] + 1):
-                for x in range(1, image.shape[0] + 1):
-                        oldPixel = imageExp[x, y]
-                        if oldPixel > 127:
-                            imageExp[x, y] = 255
-                        else:
-                            imageExp[x, y] = 0
-                        quantError = oldPixel - imageExp[x, y]
-                        imageExp[x + 1, y] = imageExp[x + 1, y] + 7 / 16.0 * quantError
-                        imageExp[x - 1, y + 1] = imageExp[x - 1, y + 1] + 3 / 16.0 * quantError
-                        imageExp[x, y + 1] = imageExp[x, y + 1] + 5 / 16.0 * quantError
-                        imageExp[x + 1, y + 1] = imageExp[x + 1, y + 1] + 1 / 16.0 * quantError
+    for y in range(1, image.shape[1] + 1):
+        for x in range(1, image.shape[0] + 1):
+            oldPixel = imageExp[x, y]
+            if oldPixel > 127:
+                imageExp[x, y] = 255
+            else:
+                imageExp[x, y] = 0
+                quantError = oldPixel - imageExp[x, y]
+                imageExp[x + 1, y] = imageExp[x + 1, y] + 7 / 16.0 * quantError
+                imageExp[x - 1, y + 1] = imageExp[x - 1, y + 1] + 3 / 16.0 * quantError
+                imageExp[x, y + 1] = imageExp[x, y + 1] + 5 / 16.0 * quantError
+                imageExp[x + 1, y + 1] = imageExp[x + 1, y + 1] + 1 / 16.0 * quantError
 
-        # Removes the border previously inserted
-        image[:, :] = imageExp[1:image.shape[0] + 1, 1:image.shape[1] + 1]
+    # Removes the border previously inserted
+    image[:, :] = imageExp[1:image.shape[0] + 1, 1:image.shape[1] + 1]
 
-        return image
+    return image
 
 
 # Function that simulates the process of a printer and a scanner

@@ -23,11 +23,10 @@ import matplotlib.pyplot as plt
 def main():
     # Creating directories to save images
 
-    pathlib.Path(
-        './Images').mkdir(parents=True, exist_ok=True)
+    pathlib.Path('./Images').mkdir(parents=True, exist_ok=True)
+
     # Textured Images with simulations of the real world
-    pathlib.Path(
-        './ImagesTextures').mkdir(parents=True, exist_ok=True)
+    pathlib.Path('./ImagesTextures').mkdir(parents=True, exist_ok=True)
 
     # Final Images after the process with simulations of the real world
     pathlib.Path('./ImagesResults').mkdir(parents=True, exist_ok=True)
@@ -50,8 +49,10 @@ def main():
         # Trying to re-create original images
         imageText = cv2.imread('ImagesTextures/%s' % file[7:], 0)
         result = cr.recoverColor(imageText)
+        #cv2.imwrite("ImagesResults/%s" % file[7:], result)
+        #result = cv2.imread("ImagesResults/%s" % file[7:])
         if(simulation):
-            result = cst.saturation(result)
+            result = cst.saturation(result, 1.4)
         cv2.imwrite("ImagesResults/%s" % file[7:], result)
 
         # Reading restored images with simulations of the real world
@@ -73,7 +74,6 @@ def main():
             plt.title("Imagem Resultante")
             plt.axis('off')
             plt.show()
-
 
         # Calculating PSNR's values of the real results
         print('PSNR: %lf' % cst.getPSNR(original, result))

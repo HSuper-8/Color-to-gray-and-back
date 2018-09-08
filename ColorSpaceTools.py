@@ -1,10 +1,63 @@
 import cv2
 import numpy as np
+import glob
+import ColorEmbedding as ce
+import ColorRecovery as cr
+import Simulation as sm
+import matplotlib.pyplot as plt
 
 ################################################################################
 #This module defines the functions that are useful in the manipulation of      #
 #the color spaces of colored images                                            #
 ################################################################################
+
+# Function to process all images
+def color2grayAndBack(k, simulation, argv):
+    psnrs = []
+    for file in np.sort(glob.glob("Images/*.png")):
+        print("\nImage %s..." % file[7:],)
+        image = cv2.imread('Images/%s' % file[7:])
+
+        imageText = ce.incorporateTexture(image)
+        if(simulation):
+            print("Simulating Print and Scan...")
+            imageText = sm.simulatePrintScan(imageText, k)
+        cv2.imwrite("ImagesTextures/%s" % file[7:], imageText)
+
+        # Trying to re-create original images
+        imageText = cv2.imread('ImagesTextures/%s' % file[7:], 0)
+        result = cr.recoverColor(imageText)
+        #cv2.imwrite("ImagesResults/%s" % file[7:], result)
+        #result = cv2.imread("ImagesResults/%s" % file[7:])
+        if(simulation):
+            result = saturation(result, 1.4)
+        cv2.imwrite("ImagesResults/%s" % file[7:], result)
+
+        # Reading restored images with simulations of the real world
+        result = cv2.imread('ImagesResults/%s' % file[7:])
+        original = cv2.imread("Images/%s" % file[7:])
+
+        # Prints the original, textured, and resulting image
+        if '-p' in argv:
+            plt.subplot(131)
+            plt.imshow(cv2.cvtColor(original, cv2.COLOR_BGR2RGB))
+            plt.title("Imagem original")
+            plt.axis('off')
+            plt.subplot(132)
+            plt.imshow(imageText, cmap='gray')
+            plt.title("Imagem Texturizada")
+            plt.axis('off')
+            plt.subplot(133)
+            plt.imshow(cv2.cvtColor(result, cv2.COLOR_BGR2RGB))
+            plt.title("Imagem Resultante")
+            plt.axis('off')
+            plt.show()
+
+        # Calculating PSNR's values of the real results
+        psnr = getPSNR(original, result)
+        print('PSNR: %lf' % psnr)
+        psnrs.append(psnr)
+    return psnrs
 
 
 # Function that separates an array into a positive and a negative array

@@ -1,10 +1,6 @@
 import cv2
-import glob
 import pathlib
 import numpy as np
-import ColorEmbedding as ce
-import ColorRecovery as cr
-import Simulation as sm
 import ColorSpaceTools as cst
 import sys
 import matplotlib.pyplot as plt
@@ -33,51 +29,24 @@ def main():
 
     simulation = bool(int(
         input("\nEnter (1) or (0) for the option:\n(1) With Simulation\n(0) Without Simulation\n")))
-    if(simulation):
+    if(('-c' not in sys.argv) & (simulation)):
         k = int(input("Enter a resize order\n"))
 
-    for file in np.sort(glob.glob("Images/*.png")):
-        print("Image %s..." % file[7:],)
-        image = cv2.imread('Images/%s' % file[7:])
-
-        imageText = ce.incorporateTexture(image)
-        if(simulation):
-            print("Simulating Print and Scan...")
-            imageText = sm.simulatePrintScan(imageText, k)
-        cv2.imwrite("ImagesTextures/%s" % file[7:], imageText)
-
-        # Trying to re-create original images
-        imageText = cv2.imread('ImagesTextures/%s' % file[7:], 0)
-        result = cr.recoverColor(imageText)
-        #cv2.imwrite("ImagesResults/%s" % file[7:], result)
-        #result = cv2.imread("ImagesResults/%s" % file[7:])
-        if(simulation):
-            result = cst.saturation(result, 1.4)
-        cv2.imwrite("ImagesResults/%s" % file[7:], result)
-
-        # Reading restored images with simulations of the real world
-        result = cv2.imread('ImagesResults/%s' % file[7:])
-        original = cv2.imread("Images/%s" % file[7:])
-
-        # Prints the original, textured, and resulting image
-        if '-p' in sys.argv:
-            plt.subplot(131)
-            plt.imshow(cv2.cvtColor(original, cv2.COLOR_BGR2RGB))
-            plt.title("Imagem original")
-            plt.axis('off')
-            plt.subplot(132)
-            plt.imshow(imageText, cmap='gray')
-            plt.title("Imagem Texturizada")
-            plt.axis('off')
-            plt.subplot(133)
-            plt.imshow(cv2.cvtColor(result, cv2.COLOR_BGR2RGB))
-            plt.title("Imagem Resultante")
-            plt.axis('off')
+    if '-c' in sys.argv:
+        psnrs = []
+        for k in range(1, 9):
+            print('\n-- Resize Order = ', k)
+            psnrs.append(cst.color2grayAndBack(k, simulation, sys.argv))
+        psnrsArray = np.array(psnrs)
+        #Display PSNR x Resize Order for each Image
+        for k in range (0, len(psnrs[0])):
+            plt.plot(psnrsArray[:,k], range(1, 9), 'bo')
+            plt.title('Imagem %s' %(k+1))
+            plt.xlabel('PSNR')
+            plt.ylabel('Resize Order')
             plt.show()
-
-        # Calculating PSNR's values of the real results
-        print('PSNR: %lf' % cst.getPSNR(original, result))
-
+    else:
+        cst.color2grayAndBack(0, simulation, sys.argv)
 
 if __name__ == '__main__':
     main()

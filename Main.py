@@ -46,7 +46,7 @@ def main():
             plt.ylabel('Resize Order')
             plt.show()
     else:
-        cst.color2grayAndBack(0, simulation, sys.argv)
+        cst.color2grayAndBack(k, simulation, sys.argv)
 
 if __name__ == '__main__':
     main()

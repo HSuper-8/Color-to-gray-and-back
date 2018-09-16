@@ -29,8 +29,12 @@ def main():
 
     simulation = bool(int(
         input("\nEnter (1) or (0) for the option:\n(1) With Simulation\n(0) Without Simulation\n")))
+
     if(('-c' not in sys.argv) & (simulation)):
         k = int(input("Enter a resize order\n"))
+
+    else:
+        k = 0
 
     if '-c' in sys.argv:
         psnrs = []

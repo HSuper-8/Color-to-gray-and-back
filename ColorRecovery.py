@@ -1,5 +1,9 @@
 import cv2
 import pywt
+import glob
+import sys
+import os.path
+from pathlib import Path
 import numpy as np
 import ColorSpaceTools as cst
 
@@ -48,3 +52,27 @@ def recoverColor(image):
     finalImage = cst.YCrCb2BGR((finalImage))
 
     return finalImage
+
+
+if __name__ == '__main__':
+    FIRST_ARG = 1
+    FLAG = 2
+
+    if len(sys.argv) > 2 and sys.argv[FLAG] == '-all':
+        temp = Path(sys.argv[1])
+        if temp.is_dir() is False:
+            print("Invalid path!")
+            sys.exit()
+
+        for file in np.sort(glob.glob("%s*.png" % sys.argv[FIRST_ARG])):
+            image = cv2.imread(file, 0)
+            result = incorporateTexture(image)
+            cv2.imwrite("%s-rec" % (file), result)
+    else:
+        temp = os.path.isfile(sys.argv[FIRST_ARG])
+        if temp is False:
+            print("Invalid file!")
+            sys.exit()
+        image = cv2.imread("%s" % sys.argv[FIRST_ARG], 0)
+        result = incorporateTexture(image)
+        cv2.imwrite("%s-rec" % (sys.argv[FIRST_ARG]), result)

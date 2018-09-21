@@ -87,6 +87,7 @@ if __name__ == '__main__':
         k = int(input("Enter a resize order\n"))
 
     if '-c' in sys.argv:
+        eoq = color2grayAndBack(1, 0, sys.argv)
         psnrs = []
         for k in range(1, 9):
             print('\n-- Resize Order = ', k)
@@ -94,7 +95,10 @@ if __name__ == '__main__':
         psnrsArray = np.array(psnrs)
         #Display PSNR x Resize Order for each Image
         for k in range(0, len(psnrs[0])):
-            plt.plot(psnrsArray[:, k], range(1, 9), 'bo')
+
+            #a = np.ones((15,))*eoq[k-1]
+            plt.plot(range(1, 9), psnrsArray[:, k], 'bo')
+            #plt.plot(range(1, 16), a)
             plt.title('Imagem %s' % (k + 1))
             plt.xlabel('PSNR')
             plt.ylabel('Resize Order')
